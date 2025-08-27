@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { useNavigate } from "react-router";
 export default function UserList() {
   //State
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const url = "http://localhost:3000/students";
   useEffect(() => {
     setLoading(true);
@@ -28,6 +30,9 @@ export default function UserList() {
       getUserData();
     }
   };
+  const editUser = (id) => {
+    navigate("/edit/" + id);
+  };
   return (
     <div>
       <h1 style={{ fontSize: "30px" }}>
@@ -38,6 +43,7 @@ export default function UserList() {
         <li>Age</li>
         <li>Email</li>
         <li>Action</li>
+        <li>Edit</li>
       </ul>
       {/* MAP Function */}
       {!loading ? (
@@ -57,6 +63,20 @@ export default function UserList() {
                 onClick={() => deleteUser(user.id)}
               >
                 Delete
+              </button>
+            </li>
+            <li>
+              <button
+                style={{
+                  border: "2px solid gray",
+                  borderRadius: "4px",
+                  padding: "2px",
+                  backgroundColor: "lightgray",
+                  width: "60px",
+                }}
+                onClick={() => editUser(user.id)}
+              >
+                Edit
               </button>
             </li>
           </ul>
